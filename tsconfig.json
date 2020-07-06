@@ -15,6 +15,12 @@
     },
     {
       "path": "./e2e/tsconfig.json"
+    },
+    {
+      "path": "./projects/ngx-lazy-modules/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngx-lazy-modules/tsconfig.spec.json"
     }
 ]
 }

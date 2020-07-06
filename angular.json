@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "ngx-lazy-modules": {
+      "projectType": "library",
+      "root": "projects/ngx-lazy-modules",
+      "sourceRoot": "projects/ngx-lazy-modules/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-lazy-modules/tsconfig.lib.json",
+            "project": "projects/ngx-lazy-modules/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-lazy-modules/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-lazy-modules/src/test.ts",
+            "tsConfig": "projects/ngx-lazy-modules/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-lazy-modules/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-lazy-modules/tsconfig.lib.json",
+              "projects/ngx-lazy-modules/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "wlocalhost-libraries"
 }
