@@ -28,7 +28,7 @@ jobs:
 
     # Runs a set of commands using the runners shell
     - name: Push Library to NPM
-      run: |
-        cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
-        npm set registry https://registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-        npm publish --access public
+      run: cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
