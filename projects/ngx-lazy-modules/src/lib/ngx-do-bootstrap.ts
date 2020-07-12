@@ -1,9 +1,9 @@
 import { Type, StaticProvider, ApplicationRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-export interface LazyModules { slug: string, loadModule: () => Promise<Type<any>> }
+export interface NgxLazyModules { slug: string, loadModule: () => Promise<Type<any>> }
 
-export function ngxLazyLoadModules(lazyModules: LazyModules[], { globalFunctionName = 'ngxLazyModulesLoaded', staticProvider }: {
+export function ngxLazyLoadModules(lazyModules: NgxLazyModules[], { globalFunctionName = 'ngxLazyModulesLoaded', staticProvider }: {
     globalFunctionName?: string,
     staticProvider?: StaticProvider[]
 }) {
