@@ -30,4 +30,5 @@ jobs:
     - name: Push Library to NPM
       run: |
         cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
+        npm set registry https://registry.npmjs.org/
         npm publish --access public
