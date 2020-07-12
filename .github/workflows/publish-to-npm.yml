@@ -4,12 +4,12 @@ name: Publish package to NPM
 
 on:
   release:
-    types: [released, edited]
+    types: [released]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  publish:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -17,17 +17,43 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 10
 
     # Runs a single command using the runners shell
-    - name: Install all modules
-      run: npm install
-
-    # Runs a single command using the runners shell
-    - name: Build Library
-      run: npx ng build --project=ngx-lazy-modules --prod
+    - name: Install modules & build
+      run: |
+        npm install
+        npx ng build --project=ngx-lazy-modules --prod
 
     # Runs a set of commands using the runners shell
     - uses: JS-DevTools/npm-publish@v1
       with:
         package: ./dist/ngx-lazy-modules/package.json
         token: ${{ secrets.NPM_TOKEN }}
+
+  publish:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 10
+
+    # Runs a single command using the runners shell
+    - name: Install modules & build
+      run: |
+        npm install
+        npx ng build --project=ngx-lazy-modules --prod
+
+    # Runs a set of commands using the runners shell
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        registry: https://npm.pkg.github.com
+        package: ./dist/ngx-lazy-modules/package.json
+        token: ${{ secrets.PERSONAL_TOKEN }}
