@@ -27,8 +27,7 @@ jobs:
       run: npx ng build --project=ngx-lazy-modules --prod
 
     # Runs a set of commands using the runners shell
-    - name: Push Library to NPM
-      run: cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
     - uses: JS-DevTools/npm-publish@v1
       with:
+        package: $GITHUB_WORKSPACE/dist/ngx-lazy-modules/package.json
         token: ${{ secrets.NPM_TOKEN }}
