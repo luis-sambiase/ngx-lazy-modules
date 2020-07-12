@@ -36,7 +36,7 @@ jobs:
         version: ${{ env.RELEASE_VERSION }}
 
     - name: Publish to NPM repository
-     uses: JS-DevTools/npm-publish@v1
+      uses: JS-DevTools/npm-publish@v1
       with:
         package: ./dist/ngx-lazy-modules/package.json
         token: ${{ secrets.NPM_TOKEN }}
