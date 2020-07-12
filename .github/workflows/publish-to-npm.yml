@@ -4,7 +4,7 @@ name: Publish package to NPM
 
 on:
   release:
-    types: [released]
+    types: [released, edited]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,4 +30,4 @@ jobs:
     - name: Push Library to NPM
       run: |
         cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
-        npm publish
+        npm publish --access public
