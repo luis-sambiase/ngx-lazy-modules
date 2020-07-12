@@ -29,6 +29,6 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Push Library to NPM
       run: cd $GITHUB_WORKSPACE/dist/ngx-lazy-modules
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
