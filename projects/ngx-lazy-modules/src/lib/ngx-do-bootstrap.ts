@@ -1,38 +1,23 @@
-import { Type, StaticProvider, ApplicationRef, NgModuleRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-export interface NgxLazyModule { slug: string, loadModule: () => Promise<Type<any>> }
+import { NgxLazyModulesModule } from './ngx-lazy-modules.module';
+import { NgxLazyModulesComponent } from './ngx-lazy-modules.component';
+import { NgxLazyModule, IEventAndStaticProviders } from './interfaces';
+import { NgxLazyLoadModulesToken } from './tokens';
 
-export function ngxLazyLoadModules(lazyModules: NgxLazyModule[], { globalFunctionName = 'ngxLazyModulesLoaded', staticProvider }: {
-    globalFunctionName?: string,
-    staticProvider?: StaticProvider[]
-}) {
-    let prevModuleRef = null as NgModuleRef<any>
-    const returnObj = {
-        async load(current_slug: string) {
-            try {
-                if (prevModuleRef) {
-                    prevModuleRef.destroy()
-                }
-                const loadModule = lazyModules.find(({ slug }) => [current_slug, '**'].includes(slug))
-                const module = await loadModule.loadModule()
-                return platformBrowserDynamic(staticProvider).bootstrapModule(module).then(moduleRef => {
-                    return prevModuleRef = moduleRef
-                })
-            } catch (error) {
-                throw new Error(error)
-            }
-        }
-    }
-    globalThis[globalFunctionName]?.(returnObj)
-    return returnObj
-}
+export async function ngxLazyLoadModules(
+    lazyModules: NgxLazyModule[],
+    eventAndStaticProviders?: IEventAndStaticProviders
+): Promise<NgxLazyModulesComponent> {
+    const { globalFunctionName, staticProvider = [], defaultSlug = '**' } = eventAndStaticProviders || {};
+    const moduleRef = await platformBrowserDynamic([
+        { provide: NgxLazyLoadModulesToken, useValue: { lazyModules } },
+        ...staticProvider
+    ]).bootstrapModule(NgxLazyModulesModule);
 
-export abstract class NgxDoBootstrapModule {
-    abstract bootstrapComponent: Type<any>
-    rootSelectorOrNode = 'app-root'
-
-    ngDoBootstrap(applicationRef: ApplicationRef) {
-        applicationRef.bootstrap(this.bootstrapComponent, this.rootSelectorOrNode)
-    }
+    const { instance } = moduleRef.instance.getComponent();
+    // Load default route
+    await instance.load(defaultSlug);
+    globalThis[globalFunctionName || 'ngxLazyModulesLoaded']?.(instance);
+    return instance;
 }

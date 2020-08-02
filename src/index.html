@@ -1,13 +1,31 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>WlocalhostLibraries</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    window.ngxLazyModulesLoaded = function (ngx) {
+      window.ngx = ngx
+    }
+
+    // async function load(slug) {
+    //   await window.ngx.load(slug)
+    // }
+  </script>
 </head>
+
 <body>
-  <app-root></app-root>
+  <lib-ngx-lazy-modules></lib-ngx-lazy-modules>
+
+  <div>
+    <button onclick="ngx.load('one')">One</button>
+    <button onclick="ngx.load('two')">Two</button>
+    <button onclick="ngx.addData({ some: 'data' })">Add data</button>
+  </div>
 </body>
+
 </html>

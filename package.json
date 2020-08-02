@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:lazy-modules": "ng build --watch --project=ngx-lazy-modules",
     "build": "ng build",
+    "build:lazy-modules": "ng build --prod --project=ngx-lazy-modules",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

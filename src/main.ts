@@ -1,12 +1,27 @@
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { ngxLazyLoadModules, NgxLazyModule } from '@wanoo21/ngx-lazy-modules';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+const lazyModules: NgxLazyModule[] = [
+  {
+    slug: 'one',
+    loadModule: () => import('./app/one/one.module').then(m => m.OneModule)
+  },
+  {
+    slug: 'two',
+    loadModule: () => import('./app/two/two.module').then(m => m.TwoModule)
+  },
+  {
+    slug: '**',
+    loadModule: () => import('./app/app.module').then(m => m.AppModule)
+  }
+];
+
+ngxLazyLoadModules(lazyModules)
+  .catch(error => console.error(error));
+

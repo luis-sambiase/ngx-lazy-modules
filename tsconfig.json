@@ -11,6 +11,9 @@
       "path": "./tsconfig.app.json"
     },
     {
+      "path": "./tsconfig.base.json"
+    },
+    {
       "path": "./tsconfig.spec.json"
     },
     {
@@ -22,5 +25,5 @@
     {
       "path": "./projects/ngx-lazy-modules/tsconfig.spec.json"
     }
-]
+  ]
 }

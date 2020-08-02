@@ -16,7 +16,7 @@
       "dom"
     ],
     "paths": {
-      "ngx-lazy-modules": [
+      "@wanoo21/ngx-lazy-modules": [
         "dist/ngx-lazy-modules/ngx-lazy-modules",
         "dist/ngx-lazy-modules"
       ]
