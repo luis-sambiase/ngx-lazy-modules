@@ -1,20 +1,15 @@
 import { NgModule, ApplicationRef, ComponentRef } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxLazyModulesComponent } from './ngx-lazy-modules.component';
+// import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [NgxLazyModulesComponent],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    NoopAnimationsModule
-  ],
-  // exports: [NgxLazyModulesComponent]
+  // imports: [
+  //   CommonModule
+  // ]
 })
-export class NgxLazyModulesModule {
+export abstract class NgxLazyModulesModule {
   private componentRef: ComponentRef<NgxLazyModulesComponent>;
 
   ngDoBootstrap(applicationRef: ApplicationRef): void {

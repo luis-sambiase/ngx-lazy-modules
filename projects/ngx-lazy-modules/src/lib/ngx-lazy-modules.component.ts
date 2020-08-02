@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, Compiler, Injector, Inject, ComponentRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, Compiler, Injector, Inject, ComponentRef, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 
 import { NgxLazyLoadModulesConfig } from './interfaces';
 import { NgxLazyLoadModulesToken } from './tokens';
@@ -8,9 +8,10 @@ import { NgxLazyLoadModulesToken } from './tokens';
   template: `
     <ng-template #lazy><ng-template>
   `,
-  styles: []
+  styles: [],
+  // changeDetection: ChangeDetectionStrategy.Default
 })
-export class NgxLazyModulesComponent {
+export class NgxLazyModulesComponent implements OnDestroy {
   @ViewChild('lazy', { read: ViewContainerRef, static: true }) lazyView: ViewContainerRef;
   private dynamicComponentRef: ComponentRef<any>;
 
@@ -28,16 +29,23 @@ export class NgxLazyModulesComponent {
     const moduleRef = moduleFactory.create(this.injector);
     const componentFactory = this.componentFactoryresolver.resolveComponentFactory(moduleRef.instance.bootstrapComponent);
     this.lazyView.clear();
-    this.dynamicComponentRef = this.lazyView.createComponent(componentFactory, null, moduleRef.injector);
-    this.dynamicComponentRef.changeDetectorRef.detectChanges();
+    this.dynamicComponentRef = this.lazyView.createComponent(componentFactory, null, moduleRef.injector, null, moduleRef);
+    // this.dynamicComponentRef.hostView.detectChanges();
+    // this.dynamicComponentRef.changeDetectorRef.detectChanges();
     return this.dynamicComponentRef;
   }
 
   addData(data: any): void {
-    const { instance, changeDetectorRef } = this.dynamicComponentRef;
+    const { instance, hostView } = this.dynamicComponentRef;
     instance.ngxLazyLoadModuleData = data;
-    changeDetectorRef.detectChanges();
+    hostView.detectChanges();
     // this.dynamicComponentRef.instance.ngOnChanges?.();
+  }
+
+  ngOnDestroy(): void {
+    if (this.dynamicComponentRef) {
+      this.dynamicComponentRef.destroy();
+    }
   }
 
 }

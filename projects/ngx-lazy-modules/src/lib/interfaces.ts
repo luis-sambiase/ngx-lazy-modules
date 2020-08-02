@@ -9,7 +9,7 @@ export interface INgxLazyLoadModules {
 }
 export interface IEventAndStaticProviders {
     globalFunctionName?: string;
-    defaultSlug: string;
+    defaultSlug?: string;
     staticProvider?: StaticProvider[];
 }
 export interface NgxLazyModulesDoBootstrapModule {

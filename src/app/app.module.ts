@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgxLazyModulesDoBootstrapModule } from '@wanoo21/ngx-lazy-modules';
 
-import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    SharedModule,
+    CommonModule,
+    // BrowserModule,
+    // NoopAnimationsModule,
     AppRoutingModule,
   ],
   providers: [],
